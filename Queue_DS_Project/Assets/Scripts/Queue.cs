@@ -1,18 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Queue : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private Queue<string> myQueue = new Queue<string>();
+    [SerializeField] private TMP_Text queueText;
+
+    public void AddCommand(string queue) //Adds to the queue
     {
-        
+        myQueue.Enqueue(queue);
+        UpdateQueueText();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void RemoveCommand() //Remove from queue
     {
-        
+        if (myQueue.Count == 0) //Counts how many things are in a queue
+        {
+            Debug.Log("Nothing left to run");
+            return;
+        }
+        string cmd = myQueue.Dequeue();
+        Debug.Log(cmd);
+
+        UpdateQueueText();
+    }
+
+    public void UpdateQueueText()
+    {
+        queueText.text = string.Empty;
+
+        foreach(string queue in myQueue)
+        {
+            queueText.text += queue + ", ";
+        }
     }
 }
