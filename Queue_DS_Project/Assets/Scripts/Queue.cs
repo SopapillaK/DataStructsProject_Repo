@@ -19,8 +19,8 @@ public class Queue : MonoBehaviour
     public void AddSound(AudioClip ac)
     {
         mySources.Enqueue(ac);
-        AudioSource as = GetComponent<AudioSource>();
-        as.PlayOneShot(ac);
+        AudioSource AS = GetComponent<AudioSource>();
+        AS.PlayOneShot(ac);
     }
 
     public void RemoveCommand() //Remove from queue
