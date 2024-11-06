@@ -25,6 +25,8 @@ public class Queue : MonoBehaviour
         Debug.Log(cmd);
 
         UpdateQueueText();
+
+        StartCoroutine(DequeueWait());
     }
 
     public void UpdateQueueText()
@@ -35,5 +37,12 @@ public class Queue : MonoBehaviour
         {
             queueText.text += queue + ", ";
         }
+    }
+
+    IEnumerator DequeueWait()
+    {
+        yield return new WaitForSeconds(1.0f);
+
+        RemoveCommand();
     }
 }
