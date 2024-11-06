@@ -16,11 +16,11 @@ public class Queue : MonoBehaviour
         UpdateQueueText();
     }
 
-    public void AddSound(AudioClip ac)
+    public void AddSound(AudioClip ac) //Adds to the queue the piano sound
     {
         mySources.Enqueue(ac);
-        AudioSource AS = GetComponent<AudioSource>();
-        AS.PlayOneShot(ac);
+        AudioSource AS = GetComponent<AudioSource>(); //Checks the unity if there is an audio source
+        AS.PlayOneShot(ac); //plays the note
     }
 
     public void RemoveCommand() //Remove from queue
@@ -30,9 +30,10 @@ public class Queue : MonoBehaviour
             Debug.Log("Nothing left to run");
             return;
         }
-        string cmd = myQueue.Dequeue();
-        AudioClip snd = mySources.Dequeue();
+        string cmd = myQueue.Dequeue(); //Dequeues the string
+        AudioClip snd = mySources.Dequeue(); //Deques the sound
         Debug.Log(cmd);
+        Debug.Log(snd);
 
         UpdateQueueText();
 
