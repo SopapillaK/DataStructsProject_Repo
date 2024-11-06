@@ -6,12 +6,20 @@ using TMPro;
 public class Queue : MonoBehaviour
 {
     private Queue<string> myQueue = new Queue<string>();
+    private Queue<AudioSource> mySources = new Queue<AudioSource>();
+    //private AudioSource ac = GetComponent<AudioSource>();
     [SerializeField] private TMP_Text queueText;
 
     public void AddCommand(string queue) //Adds to the queue
     {
         myQueue.Enqueue(queue);
         UpdateQueueText();
+    }
+
+    public void AddSound(AudioSource ac)
+    {
+        mySources.Enqueue(ac);
+        ac.Play();
     }
 
     public void RemoveCommand() //Remove from queue
