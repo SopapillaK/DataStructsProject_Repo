@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Text;
 
 public class Queue : MonoBehaviour
 {
     private Queue<string> myQueue = new Queue<string>();
-    private Queue<AudioSource> mySources = new Queue<AudioSource>();
-    //private AudioSource ac = GetComponent<AudioSource>();
+    private Queue<AudioClip> mySources = new Queue<AudioClip>();
     [SerializeField] private TMP_Text queueText;
 
     public void AddCommand(string queue) //Adds to the queue
@@ -16,10 +16,11 @@ public class Queue : MonoBehaviour
         UpdateQueueText();
     }
 
-    public void AddSound(AudioSource ac)
+    public void AddSound(AudioClip ac)
     {
         mySources.Enqueue(ac);
-        ac.Play();
+        AudioSource as = GetComponent<AudioSource>();
+        as.PlayOneShot(ac);
     }
 
     public void RemoveCommand() //Remove from queue
@@ -30,6 +31,7 @@ public class Queue : MonoBehaviour
             return;
         }
         string cmd = myQueue.Dequeue();
+        AudioClip snd = mySources.Dequeue();
         Debug.Log(cmd);
 
         UpdateQueueText();
