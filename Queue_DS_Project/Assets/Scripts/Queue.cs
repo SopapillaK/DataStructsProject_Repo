@@ -9,8 +9,9 @@ public class Queue : MonoBehaviour
     private Queue<string> myQueue = new Queue<string>();
     private Queue<AudioClip> myAudioSources = new Queue<AudioClip>();
     [SerializeField] private TMP_Text queueText;
+    [SerializeField] private TMP_Text dequeueText;
 
-    public void AddCommand(string queue) //Adds to the queue
+    public void AddCommand(string queue) //Adds to the queue, cant take more than one argument so we had to make a seperate queue for the audio
     {
         myQueue.Enqueue(queue);
         UpdateQueueText();
@@ -32,6 +33,11 @@ public class Queue : MonoBehaviour
         }
         string cmd = myQueue.Dequeue(); //Dequeues the string
         AudioClip snd = myAudioSources.Dequeue(); //Deques the sound
+
+        AudioSource audioSource = GetComponent<AudioSource>(); //Checks the unity if there is an audio source
+        audioSource.PlayOneShot(snd); //plays the note
+  
+        dequeueText.text += cmd + " ";
         Debug.Log(cmd);
         Debug.Log(snd);
 
@@ -49,6 +55,7 @@ public class Queue : MonoBehaviour
             queueText.text += queue + ", ";
         }
     }
+
 
     IEnumerator DequeueWait()
     {
