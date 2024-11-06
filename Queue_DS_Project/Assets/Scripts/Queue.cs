@@ -7,7 +7,7 @@ using System.Text;
 public class Queue : MonoBehaviour
 {
     private Queue<string> myQueue = new Queue<string>();
-    private Queue<AudioClip> mySources = new Queue<AudioClip>();
+    private Queue<AudioClip> myAudioSources = new Queue<AudioClip>();
     [SerializeField] private TMP_Text queueText;
 
     public void AddCommand(string queue) //Adds to the queue
@@ -16,11 +16,11 @@ public class Queue : MonoBehaviour
         UpdateQueueText();
     }
 
-    public void AddSound(AudioClip ac) //Adds to the queue the piano sound
+    public void AddSound(AudioClip audioClip) //Adds to the queue the piano sound
     {
-        mySources.Enqueue(ac);
-        AudioSource AS = GetComponent<AudioSource>(); //Checks the unity if there is an audio source
-        AS.PlayOneShot(ac); //plays the note
+        AudioSource audioSource = GetComponent<AudioSource>(); //Checks the unity if there is an audio source
+        audioSource.PlayOneShot(audioClip); //plays the note
+        myAudioSources.Enqueue(audioClip); //adds the audio to the queue
     }
 
     public void RemoveCommand() //Remove from queue
@@ -31,7 +31,7 @@ public class Queue : MonoBehaviour
             return;
         }
         string cmd = myQueue.Dequeue(); //Dequeues the string
-        AudioClip snd = mySources.Dequeue(); //Deques the sound
+        AudioClip snd = myAudioSources.Dequeue(); //Deques the sound
         Debug.Log(cmd);
         Debug.Log(snd);
 
