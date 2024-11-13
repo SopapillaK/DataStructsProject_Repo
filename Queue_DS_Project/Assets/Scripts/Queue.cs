@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.Text;
+using Unity.VisualScripting;
 
 public class Queue : MonoBehaviour
 {
     private Queue<string> myQueue = new Queue<string>();
     private Queue<AudioClip> myAudioSources = new Queue<AudioClip>();
+    private Queue<ParticleSystem> myParticleSystemSources = new Queue<ParticleSystem>();
     [SerializeField] private TMP_Text queueText;
     [SerializeField] private TMP_Text dequeueText;
 
@@ -24,6 +26,13 @@ public class Queue : MonoBehaviour
         myAudioSources.Enqueue(audioClip); //adds the audio to the queue
     }
 
+    public void AddParticleEffect(ParticleSystem particleSystem)
+    {
+        particleSystem.Play();
+        myParticleSystemSources.Enqueue(particleSystem);
+        Debug.Log("Particle Added");
+    }
+
     public void RemoveCommand() //Remove from queue
     {
         if (myQueue.Count == 0) //Counts how many things are in a queue
@@ -32,10 +41,13 @@ public class Queue : MonoBehaviour
             return;
         }
         string cmd = myQueue.Dequeue(); //Dequeues the string
-        AudioClip snd = myAudioSources.Dequeue(); //Deques the sound
+        AudioClip snd = myAudioSources.Dequeue(); //Dequeues the sound
+        ParticleSystem ps = myParticleSystemSources.Dequeue(); //Dequeues the Particle System
 
         AudioSource audioSource = GetComponent<AudioSource>(); //Checks the unity if there is an audio source
         audioSource.PlayOneShot(snd); //plays the note
+
+        ps.Play(); //plays the particle effect
   
         dequeueText.text += cmd + " ";
         Debug.Log(cmd);
